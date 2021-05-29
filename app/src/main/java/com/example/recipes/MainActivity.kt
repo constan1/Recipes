@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         )
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigationView.setupWithNavController(navController)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+
 
     }
 
