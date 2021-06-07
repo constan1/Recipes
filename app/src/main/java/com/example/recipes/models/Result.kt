@@ -1,6 +1,4 @@
-package com.example.recipes.Models
-
-import com.example.recipes.Models.ExtendedIngredient
+package com.example.recipes.models
 
 data class Result(
     val aggregateLikes: Int,

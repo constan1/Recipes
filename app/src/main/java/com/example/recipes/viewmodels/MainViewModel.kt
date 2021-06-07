@@ -1,13 +1,9 @@
-package com.example.recipes
+package com.example.recipes.viewmodels
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.Network
 import android.net.NetworkCapabilities
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -50,6 +46,7 @@ class MainViewModel @ViewModelInject constructor(
         }
     }
 
+    //error handling of request
     private fun handleFoodRecipesResponse(response: Response<FoodRecipe>): NetworkResult<FoodRecipe>? {
 
         when {

@@ -1,4 +1,4 @@
-package com.example.recipes.Models
+package com.example.recipes.models
 
 data class ExtendedIngredient(
     val aisle: String,

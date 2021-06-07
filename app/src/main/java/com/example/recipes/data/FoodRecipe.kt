@@ -1,6 +1,6 @@
 package com.example.recipes.data
 
-import com.example.recipes.Models.Result
+import com.example.recipes.models.Result
 
 data class FoodRecipe(
 
