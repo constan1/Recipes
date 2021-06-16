@@ -1,8 +1,28 @@
+buildscript {
+    repositories {
+        google()
+    }
+    dependencies {
+        def nav_version = "2.3.5"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+    }
+}
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+
+
+
+}
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile){
+            options.compilerArgs << "-Xlint:deprecation"
+        }
+    }
 }
 
 android {
@@ -11,7 +31,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.recipes"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -44,6 +64,10 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.10"
     implementation "androidx.multidex:multidex:2.0.1"
+
+    apply plugin: "androidx.navigation.safeargs.kotlin"
+    apply plugin: 'kotlin-android-extensions'
+
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.2.0'

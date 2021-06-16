@@ -9,7 +9,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.recipes.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var bottomNavigationView: BottomNavigationView

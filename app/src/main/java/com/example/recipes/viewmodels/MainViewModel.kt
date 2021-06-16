@@ -10,6 +10,7 @@ import com.example.recipes.data.FoodRecipe
 import com.example.recipes.data.Repository
 import com.example.recipes.data.database.RecipesEntity
 import com.example.recipes.util.NetworkResult
+import com.example.recipes.util.observeOnce
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.Dispatcher
@@ -26,15 +27,21 @@ class MainViewModel @ViewModelInject constructor(
 
     private fun insertRecipes(recipesEntity: RecipesEntity) =
             viewModelScope.launch (Dispatchers.IO){
-                repository.local.inserRecipes(recipesEntity)
+                repository.local.insertRecipes(recipesEntity)
             }
 
     /**Retrofit */
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
+    var searchedRecipeResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
 
     fun getRecipes(queries: Map<String,String>) = viewModelScope.launch {
         getRecipesSafeCall(queries)
     }
+
+    fun searchRecipes(searchQuery: Map<String, String>) = viewModelScope.launch {
+        searchRecipSafeCall(searchQuery)
+    }
+
 
     private suspend fun getRecipesSafeCall(queries: Map<String, String>) {
         recipesResponse.value = NetworkResult.Loading()
@@ -44,8 +51,9 @@ class MainViewModel @ViewModelInject constructor(
                 val response = repository.remote.getRecipes(queries)
                 recipesResponse.value = handleFoodRecipesResponse(response)
 
+
                 val  foodRecipe = recipesResponse.value!!.data
-                if(foodRecipe!=null) 
+                if(foodRecipe!=null)
                 {
                     offlineCacheRecipe(foodRecipe)
                 }
@@ -61,6 +69,30 @@ class MainViewModel @ViewModelInject constructor(
             recipesResponse.value = NetworkResult.Error("No internet Connection")
         }
     }
+
+
+    private suspend fun searchRecipSafeCall(searchQuery: Map<String, String>) {
+        searchedRecipeResponse.value = NetworkResult.Loading()
+        if(hasInternetConnection())
+        {
+            try {
+                val response = repository.remote.searchRecipes(searchQuery)
+               searchedRecipeResponse.value = handleFoodRecipesResponse(response)
+
+
+            }catch (e: Exception)
+            {
+                searchedRecipeResponse.value = NetworkResult.Error("Recipes not found")
+            }
+
+
+        }
+        else
+        {
+            searchedRecipeResponse.value = NetworkResult.Error("No internet Connection")
+        }
+    }
+
 
     private fun offlineCacheRecipe(foodRecipe: FoodRecipe) {
             val recipesEntity = RecipesEntity(foodRecipe)

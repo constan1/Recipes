@@ -43,7 +43,7 @@ class RecipeAdapter() : RecyclerView.Adapter<RecipeAdapter.MyViewHolder>() {
     }
 
 
-    fun setData(newData: FoodRecipe)
+     fun setData(newData: FoodRecipe)
     {
         var recipeDiffUtil = RecipesDiffUtil(currentRecipe,newData.results)
         val diffUtilResult = DiffUtil.calculateDiff(recipeDiffUtil)
