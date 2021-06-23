@@ -13,7 +13,7 @@ data class Result(
 
     val dairyFree: Boolean,
 
-    val extendedIngredients: @RawValue List<ExtendedIngredient>,
+    val extendedIngredients: @RawValue List<ExtendedIngredient?>?,
 
     val glutenFree: Boolean,
 
@@ -23,7 +23,7 @@ data class Result(
 
     val readyInMinutes: Int,
 
-    val sourceName: String,
+    val sourceName: String?,
     val sourceUrl: String,
 
     val summary: String,
